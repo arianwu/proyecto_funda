@@ -1,0 +1,361 @@
+<?xml version="1.0"?>
+
+<robot name="brazo">
+
+  <!-- Color of materials -->
+  <material name="white">
+    <color rgba="1 1 1 1"/>
+  </material>
+  <material name="blue">
+    <color rgba="0 0 1 1"/>
+  </material>
+  <material name="black">
+    <color rgba="0 0 0 1"/>
+  </material>
+
+  <link name="base">
+    <visual>
+      <geometry>
+        <cylinder length="0.02" radius="0.04"/>
+      </geometry>
+      <origin rpy="1.5708 0 0" xyz="0 0.01 0"/>
+      <material name="blue" />
+    </visual>
+    <collision>
+      <origin rpy="1.5708 0 0" xyz="0 0.01 0"/>
+      <geometry>
+        <cylinder length="0.02" radius="0.04"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="1" />
+      <inertia ixx="0.000508214" ixy="0.0" ixz="0.0" iyy="0.000498718" iyz="0.00001661" izz="0.000335888" />
+    </inertial>
+  </link>
+  <gazebo reference="base">
+    <material>Gazebo/White</material>
+  </gazebo>
+
+  <joint name="base_joint" type="revolute">
+    <parent link="base"/>
+    <child link="hombro"/>
+    <origin rpy="1.5708 0 0" xyz="0 0 0"/>
+    <axis xyz="0 0 1" />
+    <limit effort="300" velocity="0.1" lower="-3.1" upper="3.1"/>
+    <dynamics damping="50" friction="1"/>
+  </joint>
+
+  <link name="hombro">
+    <visual>
+      <geometry>
+        <mesh filename="package://proy/meshes/Hombro.stl" scale="0.01 0.01 0.01"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="-0.04 -0.04 0"/>
+      <material name="blue" />
+    </visual>
+    <collision>
+      <origin rpy="1.5708 0 0" xyz="0 0.01 0"/>
+      <geometry>
+        <mesh filename="package://proy/meshes/Hombro.stl" scale="0.01 0.01 0.01"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.576" />
+      <inertia ixx="0.000508214" ixy="0.0" ixz="0.0" iyy="0.000498718" iyz="0.00001661" izz="0.000335888" />
+    </inertial>
+  </link>
+  <gazebo reference="hombro">
+    <material>Gazebo/White</material>
+  </gazebo>
+
+  <joint name="hombro_joint" type="revolute">
+    <parent link="hombro"/>
+    <child link="antebrazo1"/>
+    <origin rpy="1.5708 0 -1.5708" xyz="0 0 0.05"/>
+    <axis xyz="0 0 1" />
+    <limit effort="300" velocity="0.1" lower="-0.2" upper="3.1"/>
+    <dynamics damping="50" friction="1"/>
+  </joint>
+
+  <link name="antebrazo1">
+    <visual>
+      <geometry>
+        <mesh filename="package://proy/meshes/Antebrazo1.stl" scale="0.01 0.01 0.01"/>
+      </geometry>
+      <origin rpy="0 0 1.5708" xyz="0.01 0 0"/>
+      <material name="blue" />
+    </visual>
+    <collision>
+      <origin rpy="0 0 1.5708" xyz="0.01 0 0"/>
+      <geometry>
+        <mesh filename="package://proy/meshes/Antebrazo1.stl" scale="0.01 0.01 0.01"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="1.715" />
+      <inertia ixx="0.003185839" ixy="0.0" ixz="0.0" iyy="0.001779619" iyz="0.0" izz="0.002999715" />
+    </inertial>
+  </link>
+  <gazebo reference="antebrazo1">
+    <material>Gazebo/White</material>
+  </gazebo>
+
+  <joint name="antebrazo_joint" type="revolute">
+    <parent link="antebrazo1"/>
+    <child link="antebrazo2"/>
+    <origin rpy="1.5708 0 1.5708" xyz="0 0 0"/>
+    <axis xyz="0 0 1" />
+    <limit effort="300" velocity="0.1" lower="-0.85" upper="0.85"/>
+    <dynamics damping="50" friction="1"/>
+  </joint>
+
+  <link name="antebrazo2">
+    <visual>
+      <geometry>
+        <mesh filename="package://proy/meshes/Antebrazo2.stl" scale="0.01 0.01 0.01"/>
+      </geometry>
+      <origin rpy="1.5708 3.1416 0" xyz="0 0 0.1152"/>
+      <material name="blue" />
+    </visual>
+    <collision>
+      <origin rpy="1.5708 3.1416 0" xyz="0 0 0.1152"/>
+      <geometry>
+        <mesh filename="package://proy/meshes/Antebrazo2.stl" scale="0.01 0.01 0.01"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="1.928" />
+      <inertia ixx="0.005364893" ixy="0.0" ixz="0.0" iyy="0.001979365" iyz="0.000182633" izz="0.005562178" />
+    </inertial>
+  </link>
+  <gazebo reference="antebrazo2">
+    <material>Gazebo/White</material>
+  </gazebo>
+
+  <joint name="ante_brazo_joint" type="revolute">
+    <parent link="antebrazo2"/>
+    <child link="brazo1"/>
+    <origin rpy="1.5708 0 1.5708" xyz="0 0 0.29"/>
+    <axis xyz="0 0 1" />
+    <limit effort="300" velocity="0.1" lower="-0.85" upper="2.2"/>
+    <dynamics damping="50" friction="1"/>
+  </joint>
+
+  <link name="brazo1">
+    <visual>
+      <geometry>
+        <mesh filename="package://proy/meshes/Brazo1.stl" scale="0.01 0.01 0.01"/>
+      </geometry>
+      <origin rpy="1.5708 0 3.1416" xyz="0.028 0.028 -0.028"/>
+      <material name="blue" />
+    </visual>
+    <collision>
+      <origin rpy="1.5708 0 3.1416" xyz="0.028 0.028 -0.028"/>
+      <geometry>
+        <mesh filename="package://proy/meshes/Brazo1.stl" scale="0.01 0.01 0.01"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.651" />
+      <inertia ixx="0.001525119" ixy="0.0" ixz="0.0" iyy="0.001494691" iyz="0.0" izz="0.000350306" />
+    </inertial>
+  </link>
+  <gazebo reference="brazo1">
+    <material>Gazebo/White</material>
+  </gazebo>
+
+  <joint name="brazo_joint" type="revolute">
+    <parent link="brazo1"/>
+    <child link="brazo2"/>
+    <origin rpy="1.5708 0 3.1416" xyz="0 0 0"/>
+    <axis xyz="0 0 1" />
+    <limit effort="300" velocity="0.1" lower="-1.85" upper="1.85"/>
+    <dynamics damping="50" friction="1"/>
+  </joint>
+
+  <link name="brazo2">
+    <visual>
+      <geometry>
+        <mesh filename="package://proy/meshes/Brazo2.stl" scale="0.01 0.01 0.01"/>
+      </geometry>
+      <origin rpy="-1.5708 0 0" xyz="0 0 0.124"/>
+      <material name="blue" />
+    </visual>
+    <collision>
+      <origin rpy="-1.5708 0 0" xyz="0 0 0.124"/>
+      <geometry>
+        <mesh filename="package://proy/meshes/Brazo2.stl" scale="0.01 0.01 0.01"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="1.262" />
+      <inertia ixx="0.002423490" ixy="0.0" ixz="0.0" iyy="0.000759478" iyz="0.0" izz="0.002382187" />
+    </inertial>
+  </link>
+  <gazebo reference="brazo2">
+    <material>Gazebo/White</material>
+  </gazebo>
+
+  <joint name="brazo_mano_joint" type="revolute">
+    <parent link="brazo2"/>
+    <child link="mano1"/>
+    <origin rpy="1.5708 0 3.1416" xyz="0 0 0.26"/>
+    <axis xyz="0 0 1" />
+    <limit effort="300" velocity="0.1" lower="-0.85" upper="0.85"/>
+    <dynamics damping="50" friction="1"/>
+  </joint>
+
+  <link name="mano1">
+    <visual>
+      <geometry>
+        <mesh filename="package://proy/meshes/Mano1.stl" scale="0.01 0.01 0.01"/>
+      </geometry>
+      <origin rpy="1.5708 0 0" xyz="-0.028 0.028 -0.02"/>
+      <material name="blue" />
+    </visual>
+    <collision>
+      <origin rpy="1.5708 0 0" xyz="-0.028 0.028 -0.02"/>
+      <geometry>
+        <mesh filename="package://proy/meshes/Mano1.stl" scale="0.01 0.01 0.01"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.266" />
+      <inertia ixx="0.000169631" ixy="0.0" ixz="0.0" iyy="0.000211352" iyz="0.0" izz="0.000107806" />
+    </inertial>
+  </link>
+  <gazebo reference="mano1">
+    <material>Gazebo/White</material>
+  </gazebo>
+
+  <joint name="mano_joint" type="revolute">
+    <parent link="mano1"/>
+    <child link="mano2"/>
+    <origin rpy="1.5708 0 1.5708" xyz="0 0.05 0"/>
+    <axis xyz="0 0 1" />
+    <limit effort="300" velocity="0.1" lower="-0.85" upper="0.85"/>
+    <dynamics damping="50" friction="1"/>
+  </joint>
+
+  <link name="mano2">
+    <visual>
+      <geometry>
+        <mesh filename="package://proy/meshes/Mano2.stl" scale="0.01 0.01 0.01"/>
+      </geometry>
+      <origin rpy="0 1.5708 3.1416" xyz="0.032 0.02 0.032"/>
+      <material name="blue" />
+    </visual>
+    <collision>
+      <origin rpy="0 1.5708 3.1416" xyz="0.032 0.02 0.032"/>
+      <geometry>
+        <mesh filename="package://proy/meshes/Mano2.stl" scale="0.01 0.01 0.01"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.286" />
+      <inertia ixx="0.000183689" ixy="0.0" ixz="0.0" iyy="0.000270447" iyz="0.0" izz="0.000152822" />
+    </inertial>
+  </link>
+  <gazebo reference="mano2">
+    <material>Gazebo/White</material>
+  </gazebo>
+
+  <joint name="fixed_joint" type="fixed">
+    <parent link="mano2"/>
+    <child link="efector"/>
+    <origin rpy="1.5708 0 1.5708" xyz="0 0 0"/>
+    <axis xyz="0 0 1" />
+    <limit effort="300" velocity="0.1" lower="-0.85" upper="0.85"/>
+    <dynamics damping="50" friction="1"/>
+  </joint>
+
+  <link name="efector">
+  </link>
+
+  <!-- Transmissions -->
+  <transmission name="tran1">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="base_joint">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor1">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <transmission name="tran2">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="hombro_joint">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor2">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <transmission name="tran3">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="antebrazo_joint">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor3">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <transmission name="tran4">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="ante_brazo_joint">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor4">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <transmission name="tran5">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="brazo_joint">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor5">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <transmission name="tran6">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="brazo_mano_joint">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor6">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <transmission name="tran7">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="mano_joint">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor7">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+   <!-- Plugin: ros_control -->
+   <gazebo>
+     <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+       <robotNamespace>/robot</robotNamespace>
+       <legacyModeNS>true</legacyModeNS>
+     </plugin>
+   </gazebo>
+
+</robot>

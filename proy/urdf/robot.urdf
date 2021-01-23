@@ -1,0 +1,167 @@
+<?xml version="1.0"?>
+
+<robot name="brazo">
+
+  <!-- Color of materials -->
+  <link name="base">
+    <visual>
+      <geometry>
+        <cylinder length="0.02" radius="0.04"/>
+      </geometry>
+      <origin rpy="1.5708 0 0" xyz="0 0.01 0"/>
+      <material name="LightGrey">
+          <color rgba="0.7 0.7 0.7 1.0"/>
+      </material>
+    </visual>
+  </link>
+
+  <joint name="base_joint" type="revolute">
+    <parent link="base"/>
+    <child link="hombro"/>
+    <origin rpy="1.5708 0 0" xyz="0 0 0"/>
+    <axis xyz="0 0 1" />
+    <limit effort="300" velocity="0.1" lower="-3.1" upper="3.1"/>
+  </joint>
+
+  <link name="hombro">
+    <visual>
+      <geometry>
+        <mesh filename="package://proy/meshes/Hombro.stl" scale="0.01 0.01 0.01"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="-0.04 -0.04 0"/>
+      <material name="LightGrey">
+        <color rgba="0.7 0.7 0.7 1.0"/>
+      </material>
+    </visual>
+  </link>
+
+  <joint name="hombro_joint" type="revolute">
+    <parent link="hombro"/>
+    <child link="antebrazo1"/>
+    <origin rpy="1.5708 0 -1.5708" xyz="0 0 0.05"/>
+    <axis xyz="0 0 1" />
+    <limit effort="300" velocity="0.1" lower="-0.2" upper="3.1"/>
+  </joint>
+
+  <link name="antebrazo1">
+    <visual>
+      <geometry>
+        <mesh filename="package://proy/meshes/Antebrazo1.stl" scale="0.01 0.01 0.01"/>
+      </geometry>
+      <origin rpy="0 0 1.5708" xyz="0.01 0 0"/>
+      <material name="LightGrey">
+        <color rgba="0.7 0.7 0.7 1.0"/>
+      </material>
+    </visual>
+  </link>
+
+  <joint name="antebrazo_joint" type="revolute">
+    <parent link="antebrazo1"/>
+    <child link="antebrazo2"/>
+    <origin rpy="1.5708 0 1.5708" xyz="0 0 0"/>
+    <axis xyz="0 0 1" />
+    <limit effort="300" velocity="0.1" lower="-0.85" upper="0.85"/>
+  </joint>
+
+  <link name="antebrazo2">
+    <visual>
+      <geometry>
+        <mesh filename="package://proy/meshes/Antebrazo2.stl" scale="0.01 0.01 0.01"/>
+      </geometry>
+      <origin rpy="1.5708 3.1416 0" xyz="0 0 0.1152"/>
+      <material name="LightGrey">
+        <color rgba="0.7 0.7 0.7 1.0"/>
+      </material>
+    </visual>
+  </link>
+
+  <joint name="ante_brazo_joint" type="revolute">
+    <parent link="antebrazo2"/>
+    <child link="brazo1"/>
+    <origin rpy="1.5708 0 1.5708" xyz="0 0 0.29"/>
+    <axis xyz="0 0 1" />
+    <limit effort="300" velocity="0.1" lower="-0.85" upper="2.2"/>
+  </joint>
+
+  <link name="brazo1">
+    <visual>
+      <geometry>
+        <mesh filename="package://proy/meshes/Brazo1.stl" scale="0.01 0.01 0.01"/>
+      </geometry>
+      <origin rpy="1.5708 0 3.1416" xyz="0.028 0.028 -0.028"/>
+      <material name="LightGrey">
+        <color rgba="0.7 0.7 0.7 1.0"/>
+      </material>
+    </visual>
+  </link>
+
+  <joint name="brazo_joint" type="revolute">
+    <parent link="brazo1"/>
+    <child link="brazo2"/>
+    <origin rpy="1.5708 0 3.1416" xyz="0 0 0"/>
+    <axis xyz="0 0 1" />
+    <limit effort="300" velocity="0.1" lower="-1.85" upper="1.85"/>
+  </joint>
+
+  <link name="brazo2">
+    <visual>
+      <geometry>
+        <mesh filename="package://proy/meshes/Brazo2.stl" scale="0.01 0.01 0.01"/>
+      </geometry>
+      <origin rpy="-1.5708 0 0" xyz="0 0 0.124"/>
+      <material name="LightGrey">
+        <color rgba="0.7 0.7 0.7 1.0"/>
+      </material>
+    </visual>
+  </link>
+
+  <joint name="brazo_mano_joint" type="revolute">
+    <parent link="brazo2"/>
+    <child link="mano1"/>
+    <origin rpy="1.5708 0 3.1416" xyz="0 0 0.26"/>
+    <axis xyz="0 0 1" />
+    <limit effort="300" velocity="0.1" lower="-0.85" upper="0.85"/>
+  </joint>
+
+  <link name="mano1">
+    <visual>
+      <geometry>
+        <mesh filename="package://proy/meshes/Mano1.stl" scale="0.01 0.01 0.01"/>
+      </geometry>
+      <origin rpy="1.5708 0 0" xyz="-0.028 0.028 -0.02"/>
+      <material name="LightGrey">
+        <color rgba="0.7 0.7 0.7 1.0"/>
+      </material>
+    </visual>
+  </link>
+
+  <joint name="mano_joint" type="revolute">
+    <parent link="mano1"/>
+    <child link="mano2"/>
+    <origin rpy="1.5708 0 1.5708" xyz="0 0.05 0"/>
+    <axis xyz="0 0 1" />
+    <limit effort="300" velocity="0.1" lower="-0.85" upper="0.85"/>
+  </joint>
+
+  <link name="mano2">
+    <visual>
+      <geometry>
+        <mesh filename="package://proy/meshes/Mano2.stl" scale="0.01 0.01 0.01"/>
+      </geometry>
+      <origin rpy="0 1.5708 3.1416" xyz="0.032 0.02 0.032"/>
+      <material name="LightGrey">
+        <color rgba="0.7 0.7 0.7 1.0"/>
+      </material>
+    </visual>
+  </link>
+
+  <joint name="fixed_joint" type="fixed">
+    <parent link="mano2"/>
+    <child link="efector"/>
+    <origin rpy="1.5708 0 1.5708" xyz="0.07 0 0"/>
+  </joint>
+
+  <link name="efector">
+  </link>
+
+</robot>

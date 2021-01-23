@@ -1,0 +1,67 @@
+#!/usr/bin/env python
+ 
+import rospy
+from std_msgs.msg import String
+from sensor_msgs.msg import JointState
+from markers import *
+from functions import *
+ 
+def callback(msg):
+    i = 0.05
+    global xd
+    key = msg.data
+    if(key=="q"):
+        xd[0] += i
+    elif(key=="a"):
+        xd[0] -= i
+    
+    if(key=="w"):
+        xd[1] += i
+    elif(key=="s"):
+        xd[1] -= i
+ 
+    if(key=="e"):
+        xd[2] += i
+    elif(key=="d"):
+        xd[2] -= i
+    
+    xdnorm = np.linalg.norm(xd)
+    if xdnorm>0.5:
+        xd = xd*0.5/xdnorm
+    
+    global q
+    q = ikine_position(xd, q)
+    
+    jstate.position = q
+    T = fkine(q)
+    bmarker_des.position(T)
+    print xd
+ 
+ 
+rospy.init_node("keyboard_ikine")
+pub = rospy.Publisher('joint_states', JointState, queue_size=1000)
+ 
+jnames = ["base_joint", "hombro_joint", "antebrazo_joint", "ante_brazo_joint", "brazo_joint", "brazo_mano_joint", "mano_joint"]
+xd=np.array([-0.3, -0.2, 0.1])
+q = np.array([-0.732,  1.101,  0.13,  -1.896, -1.589,  0.134,  0.   ])
+jstate = JointState()
+jstate.header.stamp = rospy.Time.now()
+jstate.name = jnames
+jstate.position = q
+ 
+bmarker_des = BallMarker(color['GREEN'])
+bmarker = BallMarker(color['RED'])
+T = fkine(q)
+bmarker.position(T)
+ 
+rate = rospy.Rate(100)
+if __name__ == '__main__':
+    rospy.Subscriber("/keys", String, callback)
+ 
+    while not rospy.is_shutdown():
+        T = fkine(q)
+        bmarker.position(T)
+        bmarker.publish()
+        jstate.header.stamp = rospy.Time.now()
+        pub.publish(jstate)
+        rate.sleep()

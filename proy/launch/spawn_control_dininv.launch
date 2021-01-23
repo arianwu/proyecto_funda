@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<launch>
+  
+  <param name="robot_description" textfile="$(find proy)/urdf/robot.urdf" />
+  
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+  <node name="keyboard_control_dininv" pkg="proy" type="keyboard_control_dininv" args="$(find proy)/urdf/robot_gazebo.urdf"/>
+
+  <node name="keyboard_driver" pkg="proy" type="key_publisher.py" />
+
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find proy)/config/robot-config.rviz" required="true" />
+  
+</launch>
